@@ -1,0 +1,20 @@
+#include <LiquidCrystal.h> 
+#include <Ultrasonic.h>
+#define TRIGGER 4
+#define ECHO 5
+Ultrasonic ultrasonic(TRIGGER, ECHO);
+LiquidCrystal lcd(12, 11, 10, 9, 8, 7);
+void setup() {
+lcd.begin(16,2);
+}
+void loop(){
+float cmMsec, inMsec;
+long microsec = ultrasonic.timing();
+cmMsec = ultrasonic.convert(microsec, Ultrasonic::CM);
+inMsec = ultrasonic.convert(microsec, Ultrasonic::IN);
+lcd.print("MS: "); lcd.print(microsec);
+lcd.setCursor(0, 1);
+lcd.print("CM: "); lcd.print(cmMsec);
+delay(1000);
+lcd.clear();
+}
